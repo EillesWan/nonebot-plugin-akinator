@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from httpx import AsyncClient
 from nonebot import logger
@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from cooaki import BaseAkinator, WinResp
 
 
-async def get_answer_photo(_: "BaseAkinator", data: "WinResp") -> Optional[bytes]:
+async def get_answer_photo(_: "BaseAkinator", data: "WinResp") -> bytes | None:
     if not data.photo:
         return None
     async with AsyncClient() as cli:

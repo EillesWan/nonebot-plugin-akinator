@@ -6,15 +6,14 @@ def patch():
     from collections.abc import Mapping, Sequence
     from functools import wraps
     from types import ModuleType
-    from typing import Optional
 
     _old_import = __import__
 
     @wraps(_old_import)
     def _new_import(
         name: str,
-        globals: Optional[Mapping[str, object]] = None,  # noqa: A002
-        locals: Optional[Mapping[str, object]] = None,  # noqa: A002
+        globals: Mapping[str, object] | None = None,  # noqa: A002
+        locals: Mapping[str, object] | None = None,  # noqa: A002
         fromlist: Sequence[str] = (),
         level: int = 0,
     ) -> ModuleType:

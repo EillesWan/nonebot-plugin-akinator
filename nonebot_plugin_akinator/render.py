@@ -1,15 +1,14 @@
 import mimetypes
-from collections.abc import Awaitable
+from collections.abc import Awaitable, Callable
 from contextlib import suppress
 from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
-    Optional,
+    Concatenate,
     cast,
 )
-from typing_extensions import Concatenate, ParamSpec
+from typing_extensions import ParamSpec
 
 import anyio
 import fleep
@@ -66,7 +65,7 @@ def add_akitude_router(group: RouterGroup, aki: "BaseAkinator"):
 def renderer(
     func: Callable[
         Concatenate[RouterGroup, P],
-        Awaitable[tuple[str, dict[str, Any], Optional[str]]],
+        Awaitable[tuple[str, dict[str, Any], str | None]],
     ],
 ):
     async def wrapper(aki: "BaseAkinator", *args: P.args, **kwargs: P.kwargs) -> bytes:
@@ -120,9 +119,9 @@ async def render_question_image(
 async def render_answer_image(
     router_group: RouterGroup,
     name: str,
-    description: Optional[str] = None,
-    photo: Optional[bytes] = None,
-    pseudo: Optional[str] = None,
+    description: str | None = None,
+    photo: bytes | None = None,
+    pseudo: str | None = None,
 ):
     if photo:
         photo_mime = "image"

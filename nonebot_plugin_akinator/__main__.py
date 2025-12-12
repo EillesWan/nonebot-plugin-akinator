@@ -2,7 +2,6 @@ import asyncio
 import time
 from contextlib import asynccontextmanager
 from enum import Enum, auto
-from typing import Optional, Union
 
 from cooaki import (
     Answer,
@@ -39,7 +38,7 @@ class OtherAction(str, Enum):
     EXIT = auto()
 
 
-ACTION_DICT: dict[Union[Answer, OtherAction], tuple[str, ...]] = {
+ACTION_DICT: dict[Answer | OtherAction, tuple[str, ...]] = {
     Answer.YES: ("1", "y", "yes", "是", "s", "真", "true"),
     Answer.NO: ("2", "n", "no", "否", "f", "不是", "bs", "假", "false"),
     Answer.I_DONT_KNOW: ("3", "i", "idk", "i dont know", "i don't know", "不知道", "bzd", "不清楚", "bqc"),
@@ -70,7 +69,7 @@ async def with_active_session(session_id: str):
 
 async def action_waiter_handler(
     msg: str = EventPlainText(),
-) -> Union[Answer, OtherAction, None]:
+) -> Answer | OtherAction | None:
     msg = msg.strip().lower()
     return next((k for k, v in ACTION_DICT.items() if msg in v), None)
 
@@ -79,7 +78,7 @@ def make_action_waiter(**kwargs):
     return waiter(waits=["message"], keep_session=True, **kwargs)(action_waiter_handler)
 
 
-async def continue_waiter_handler(msg: str = EventPlainText()) -> Optional[bool]:
+async def continue_waiter_handler(msg: str = EventPlainText()) -> bool | None:
     return (msg.strip().lower() in CONTINUE_ACTION) or None
 
 

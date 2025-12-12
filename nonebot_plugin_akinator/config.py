@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Literal
 
 from cookit import DebugFileWriter
 from nonebot import get_plugin_config
@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 
 class ConfigModel(BaseModel):
-    proxy: Optional[str] = None
+    proxy: str | None = None
 
     akinator_child_mode: bool = False
     akinator_language: str = "cn"
