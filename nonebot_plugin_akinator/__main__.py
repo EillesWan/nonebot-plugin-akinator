@@ -23,7 +23,7 @@ from nonebot.params import EventPlainText
 from nonebot_plugin_alconna.uniseg import UniMessage
 from nonebot_plugin_waiter import waiter
 
-from nonebot_plugin_akinator.const import HTML_RENDER_AVAILABLE
+from .const import HTML_RENDER_AVAILABLE
 
 from .config import config
 from .message import build_answer_msg, build_question_msg
