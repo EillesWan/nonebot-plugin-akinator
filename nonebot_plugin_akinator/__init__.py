@@ -14,7 +14,7 @@ if HTML_RENDER_AVAILABLE:
 from . import __main__ as __main__  # noqa: E402
 from .config import ConfigModel, config  # noqa: E402
 
-__version__ = "1.0.3"
+__version__ = "1.0.3-trimo"
 __plugin_meta__ = PluginMetadata(
     name="Akinator",
     description="网络天才",
@@ -33,12 +33,12 @@ __plugin_meta__ = PluginMetadata(
 if config.akinator_client_type == "playwright":
     if not HTML_RENDER_AVAILABLE:
         logger.warning(
-            "Client type set to playwright, but required dependencies not installed. "
-            "Consider install them by `pip install nonebot-plugin-akinator[image]`. "
-            "Will automatically fallback to httpx client.\n"
-            "P.S.: If you want to use patchright, "
-            "run `pip install nonebot-plugin-akinator[patchright]` instead. "
-            "Then run `nb akinator-patch-import` to let it take effect.",
+            "网络天才客户端类型目前为 playwright，但所需依赖并未安装。"
+            "可以通过`pip install nonebot-plugin-akinator[image]`在安装本插件时自动安装对应依赖。"
+            "现在，已回退至 HTTPX 客户端。\n"
+            "另外：如果你想用 patchright 以绕过 Cloudflare 人机检测，"
+            "可以执行`pip install nonebot-plugin-akinator[patchright]`来安装对应内容。"
+            "然后执行`nb akinator-patch-import`以使之生效。",
         )
     else:
         from nonebot import get_driver

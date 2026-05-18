@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 
 class ConfigModel(BaseModel):
-    proxy: str | None = None
+    akinator_proxy: str | None = None
 
     akinator_child_mode: bool = False
     akinator_language: str = "cn"

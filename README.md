@@ -121,7 +121,7 @@ plugins = [
 
 |            配置项            | 必填 |    默认值    |                           说明                           |
 | :--------------------------: | :--: | :----------: | :------------------------------------------------------: |
-|           `PROXY`            |  否  |      无      |    访问 Akinator 使用的代理（仅在使用 HTTPX 时生效）     |
+|      `AKINATOR_PROXY`       |  否  |      无      |    访问 Akinator 使用的代理（仅在使用 HTTPX 时生效）     |
 |    `AKINATOR_CHILD_MODE`     |  否  |   `False`    |  是否启用 Akinator 的儿童模式（结果不会出现 NSFW 人物）  |
 |     `AKINATOR_LANGUAGE`      |  否  |     `cn`     |                     Akinator 的语言                      |
 |     `AKINATOR_TEXT_MODE`     |  否  |     `cn`     |                     是否启用文字模式                     |

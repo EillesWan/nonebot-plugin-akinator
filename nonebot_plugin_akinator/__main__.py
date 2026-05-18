@@ -60,8 +60,8 @@ async def with_active_session(session_id: str):
         yield
     except NoneBotException:
         raise
-    except Exception:
-        logger.exception("Unexpected error during game")
+    except Exception as _e:
+        logger.exception("游戏过程中出现意外错误：{}".format(_e))
         await UniMessage.text("出现意外错误，结束游戏").send(at_sender=True)
     finally:
         active_sessions.discard(session_id)
@@ -110,8 +110,8 @@ async def wait_and_handle_action(aki: BaseAkinator, recall: RecallContext) -> bo
                 resp = await aki.back()
             else:
                 resp = await aki.answer(action)
-        except HTTPError:
-            logger.exception("Request error occurred")
+        except HTTPError as _e:
+            logger.exception("网络请求错误：{}".format(_e))
             await recall.send("请求失败，请重试", at_sender=True)
             continue
         except CanNotGoBackError:
@@ -131,8 +131,8 @@ async def wait_and_handle_action(aki: BaseAkinator, recall: RecallContext) -> bo
             for _ in range(3):
                 try:
                     await aki.continue_answer()
-                except HTTPError:
-                    logger.exception("Request failed when continuing")
+                except HTTPError as _e:
+                    logger.exception("在继续过程中发生网络请求错误：{}".format(_e))
                     continue
                 break
             else:
@@ -170,13 +170,13 @@ async def _(m: Matcher, ev: BaseEvent):
                 child_mode=config.akinator_child_mode,
                 base_url_template=config.akinator_base_url_template,
                 timeout=config.akinator_request_timeout,
-                proxy=config.proxy,
+                proxy=config.akinator_proxy,
             )
         )
         try:
             await aki.start()
-        except Exception:
-            logger.exception("Failed to start game")
+        except Exception as _e:
+            logger.exception("无法启动游戏：{}".format(_e))
             await m.finish("初始化游戏失败，请检查后台输出")
 
         while not aki.state.ended:
